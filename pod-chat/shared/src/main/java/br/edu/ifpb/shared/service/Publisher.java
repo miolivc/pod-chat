@@ -1,18 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package br.edu.ifpb.shared.service;
 
 import br.edu.ifpb.shared.domain.Mensagem;
+import java.rmi.Remote;
+import java.rmi.RemoteException;
 
-/**
- *
- * @author recursivejr
- */
-public interface Publisher {
+public interface Publisher extends Remote {
     
-    void publicar(Mensagem mensagem);
+    void publicar(Mensagem mensagem) throws RemoteException;
     
 }

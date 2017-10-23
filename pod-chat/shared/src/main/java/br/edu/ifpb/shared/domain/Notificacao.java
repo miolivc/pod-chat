@@ -1,20 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package br.edu.ifpb.shared.domain;
 
 import java.io.Serializable;
 import java.util.List;
 
-/**
- *
- * @author recursivejr
- */
 public class Notificacao implements Serializable {
     private Mensagem mensagem;
     private List<Usuario> inscritos;
+    private boolean entregue;
 
     public Notificacao() {
     }
@@ -33,6 +26,14 @@ public class Notificacao implements Serializable {
 
     public void setInscritos(List<Usuario> inscritos) {
         this.inscritos = inscritos;
+    }
+
+    public boolean isEntregue() {
+        return entregue;
+    }
+
+    public void setEntregue(boolean entregue) {
+        this.entregue = entregue;
     }
     
 }

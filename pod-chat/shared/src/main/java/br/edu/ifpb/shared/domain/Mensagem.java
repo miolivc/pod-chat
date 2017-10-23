@@ -1,17 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package br.edu.ifpb.shared.domain;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-/**
- *
- * @author recursivejr
- */
 public class Mensagem implements Serializable {
     private int id;
     private Usuario remetente;
