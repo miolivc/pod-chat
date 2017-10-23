@@ -17,7 +17,7 @@ import java.util.List;
 
 public class GerenciadorNotificacoes {
     
-    private GerenciadorGrupo gerenciador;
+    private GerenciadorGrupo gerenciador = null;
     private List<Notificacao> notificacoes = new ArrayList<>();
     
     public GerenciadorNotificacoes(GerenciadorGrupo gerenciador) {
@@ -34,8 +34,28 @@ public class GerenciadorNotificacoes {
     }
     
     public List<Notificacao> notificacoesDoUsuario(Usuario usuario) {
-        
-        return null;
+        List<Notificacao> notificacoesUsuario = new ArrayList<>();
+        for(Notificacao notificacao: notificacoes) {
+            for (Usuario user : notificacao.getInscritos()) {
+                if (user.equals(usuario)) {
+                    notificacoesUsuario.add(notificacao);
+                    break;
+                }
+            }
+        }
+    return notificacoesUsuario;
     }
+    
+    public void removeNotificacoesDoUsuario(Usuario usuario) {
+        for(Notificacao notificacao: notificacoes) {
+            for (Usuario user : notificacao.getInscritos()) {
+                if (user.equals(usuario)) {
+                    notificacao.getInscritos().remove(user);
+                    break;
+                }
+            }
+        }
+    }
+    
     
 }

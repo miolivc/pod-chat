@@ -36,11 +36,12 @@ public class Chat {
     
     
     public void notificaAtivos() {
-        // verificar lista de ativos e entrega as notificacoes 
-        // referentes a esse usuario e logo apos remove
         ativos.forEach((usuario) -> {
             List<Notificacao> notify = notificacoes.notificacoesDoUsuario(usuario);
+            // enviar notificacao para o usuario
             
+            // remover notificacao do usuario
+            notificacoes.removeNotificacoesDoUsuario(usuario);
         });
     }
     
