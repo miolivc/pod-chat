@@ -28,7 +28,6 @@ public class GerenciadorGrupo {
         grupos.forEach((Grupo g) -> {
             if (g.equals(grupo)) {
                 g.getInscritos().add(usuario);
-                return;
             }
         });
     }

@@ -9,7 +9,6 @@ import br.edu.ifpb.shared.domain.Subscriber;
 import br.edu.ifpb.shared.domain.Usuario;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.time.LocalDateTime;
 import java.util.List;
 
 public class GerenciadorChat extends UnicastRemoteObject implements Chat {
@@ -49,6 +48,11 @@ public class GerenciadorChat extends UnicastRemoteObject implements Chat {
     }
     
     @Override
+    public void inscrever(Grupo grupo, Usuario usuario) {
+        gGrupo.inscrever(usuario, grupo);
+    }
+    
+    @Override
     public void onChat(Usuario usuario, Subscriber subscriber, Grupo grupo) throws RemoteException {
         System.out.println("Entrou aqui.. A enviar notificaçao");
         gUsuario.logado(usuario);
@@ -57,18 +61,19 @@ public class GerenciadorChat extends UnicastRemoteObject implements Chat {
         notify.forEach((Notificacao n) -> {
             try {
                 subscriber.receber(n.getMensagem());
-                gNotificacao.remove(n);
             } catch (RemoteException ex) {
                 System.err.println(ex);
             }
         });
+        gNotificacao.recuperaNotificacao(usuario, grupo);
     }
 
     @Override
     public void publicar(Mensagem mensagem) throws RemoteException {
         gMensagem.publicar(mensagem);
-        gNotificacao.criaNotificacao(mensagem, grupoByName(mensagem.getGrupo().getNome()));
+        Grupo grupo = grupoByName(mensagem.getGrupo().getNome());
+        System.out.println("Inscritos no grupinho: " + grupo.getInscritos().size() + "inscritos");
+        gNotificacao.criaNotificacao(mensagem, grupo);
     }
 
-    
 }

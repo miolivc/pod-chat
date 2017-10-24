@@ -42,7 +42,8 @@ public class ClientApp {
                 case 2: {
                     if (login(chat)) {
                         Grupo grupo = selecionaGrupo(chat);
-
+                        chat.inscrever(grupo, usuario);
+                        
                         new Timer().schedule(new TimerTask() {
                             @Override
                             public void run() {
@@ -63,7 +64,6 @@ public class ClientApp {
                             mensagem.setTimestamp(LocalDateTime.now());
                             chat.publicar(mensagem);
                         }
-
                     }
                     System.out.println("Erro ao efetuar login.. Tente novamente");
                 }

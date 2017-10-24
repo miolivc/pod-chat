@@ -6,6 +6,8 @@ import br.edu.ifpb.shared.domain.Mensagem;
 import br.edu.ifpb.shared.domain.Notificacao;
 import br.edu.ifpb.shared.domain.Usuario;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -26,13 +28,15 @@ public class GerenciadorNotificacao {
      * @param mensagem 
      */
     public void criaNotificacao(Mensagem mensagem, Grupo grupo) {
+        System.out.println("Iniciando criacao de notificacao...");
         for(Usuario usuario : grupo.getInscritos()) {
-            if (usuario.getNome().equals(mensagem.getRemetente().getNome())) {
-                continue;
+            System.out.println("Entrou no for..." );
+            if (! (mensagem.getRemetente().getEmail().equals(usuario.getEmail()))) {
+                Notificacao notificacao = new Notificacao(mensagem, usuario);
+                notificacoes.add(notificacao);
+                System.out.println("Notificacao" + notificacao);
             }
-            Notificacao notificacao = new Notificacao(mensagem, usuario);
-            notificacoes.add(notificacao);
-            System.out.println("Notificacao" + notificacao);
+            
         }
     }
     
@@ -62,18 +66,10 @@ public class GerenciadorNotificacao {
     public List<Notificacao> recuperaNotificacao(Usuario usuario, Grupo grupo) {
         List<Notificacao> notifies = new ArrayList<>(); 
         for(Notificacao not : notificacoes) {
-            if (not.getInscrito().getEmail().equals(usuario.getEmail()) && 
-                    not.getMensagem().getGrupo().getNome().equals(grupo.getNome())) {
+                System.out.println("Foi recuperada uma notificacao para " + usuario);
                 notifies.add(not);
-                System.out.println("Recuperou: " + not);
-            }
         }
-//        notificacoes.stream().filter((n) -> n.getMensagem().getGrupo().getNome().equals(grupo.getNome())
-//                && n.getInscrito().equals(usuario))
-//                    .forEach((n) -> {
-//                        notifies.add(n);
-//                    });
-        return notifies;
+        return Collections.unmodifiableList(notifies);
     }
     
     /**
