@@ -2,15 +2,20 @@
 package br.edu.ifpb.shared.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Grupo implements Serializable {
     private String nome;
-    private List<Usuario> inscritos;
+    private List<Usuario> inscritos = new ArrayList<>();
 
     public Grupo() {
     }
 
+    public Grupo(String nome) {
+        this.nome = nome;
+    }
+    
     public String getNome() {
         return nome;
     }

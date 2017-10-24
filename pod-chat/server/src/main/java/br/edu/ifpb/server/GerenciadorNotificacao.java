@@ -58,9 +58,10 @@ public class GerenciadorNotificacao {
      * @param grupo
      * @return 
      */
-    public List<Notificacao> recuperaNotificacao(Grupo grupo) {
+    public List<Notificacao> recuperaNotificacao(Usuario usuario, Grupo grupo) {
         List<Notificacao> notifies = new ArrayList<>(); 
-        notificacoes.stream().filter((n) -> n.getMensagem().getGrupo().equals(grupo))
+        notificacoes.stream().filter((n) -> n.getMensagem().getGrupo().equals(grupo)
+                && n.getInscrito().equals(usuario))
                     .forEach((n) -> notifies.add(n));
         return notifies;
     }

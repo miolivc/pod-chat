@@ -2,6 +2,8 @@
 package br.edu.ifpb.client;
 
 import br.edu.ifpb.shared.domain.Chat;
+import br.edu.ifpb.shared.domain.Grupo;
+import br.edu.ifpb.shared.domain.Subscriber;
 import br.edu.ifpb.shared.domain.Usuario;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -23,7 +25,9 @@ public class ClientApp {
     public static void main(String[] args) throws RemoteException, NotBoundException {
         
         Chat chat = (Chat) LocateRegistry.getRegistry(10999).lookup("Chat");
+        Subscriber subs = new SubscriberClient();
         
+        System.out.println("Bem vindo ao sistema..");
         System.out.println("O que deseja fazer? \n1- Cadastrar no chat \n2- Fazer login");
         int opt = scanner.nextInt();    scanner.nextLine();
         
@@ -33,10 +37,10 @@ public class ClientApp {
             } break;
             case 2: {
                 chat = chat.login(usuario);
-                if (! chat.equals(null)) {
-                    System.out.println("Bem vindo ao sistema..");
+                if (! (chat == null)) {
                     while (true) {
-                        
+                        Grupo grupo = selecionaGrupo(chat);
+                        chat.onChat(usuario, subs, grupo);
                     }
                 }
                 System.out.println("Erro ao efetuar login.. Tente novamente");
@@ -64,4 +68,12 @@ public class ClientApp {
         return usuario;
     }
     
+    public static Grupo selecionaGrupo(Chat chat) throws RemoteException {
+        chat.listaGrupos().forEach(System.out::println);
+        System.out.print("Digite o nome do grupo desejado: ");
+        String nameGroup = scanner.nextLine();
+        return chat.listaGrupos()
+                   .stream().filter((g) -> g.getNome().equalsIgnoreCase(nameGroup))
+                   .findFirst().get();
+    }
 }

@@ -49,4 +49,5 @@ public class GerenciadorUsuario {
     public boolean logado(Usuario usuario) {
         return ativos.contains(usuario);
     }
+    
 }
