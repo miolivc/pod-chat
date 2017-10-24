@@ -62,4 +62,15 @@ public class GerenciadorGrupo {
         return grupos;
     }
     
+    public Grupo recuperar(String nome) {
+        Grupo grup = null;
+        for (Grupo g : grupos) {
+            if (g.getNome().equalsIgnoreCase(nome)) {
+                grup = g;
+                break;
+            }
+        }
+        return grup;
+    }
+    
 }

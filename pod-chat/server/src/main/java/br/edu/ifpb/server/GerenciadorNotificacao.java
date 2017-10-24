@@ -25,13 +25,14 @@ public class GerenciadorNotificacao {
      * 
      * @param mensagem 
      */
-    public void criaNotificacao(Mensagem mensagem) {
-        for(Usuario usuario : mensagem.getGrupo().getInscritos()) {
-            if (usuario.equals(mensagem.getRemetente())) {
+    public void criaNotificacao(Mensagem mensagem, Grupo grupo) {
+        for(Usuario usuario : grupo.getInscritos()) {
+            if (usuario.getNome().equals(mensagem.getRemetente().getNome())) {
                 continue;
             }
             Notificacao notificacao = new Notificacao(mensagem, usuario);
             notificacoes.add(notificacao);
+            System.out.println("Notificacao" + notificacao);
         }
     }
     
@@ -60,9 +61,18 @@ public class GerenciadorNotificacao {
      */
     public List<Notificacao> recuperaNotificacao(Usuario usuario, Grupo grupo) {
         List<Notificacao> notifies = new ArrayList<>(); 
-        notificacoes.stream().filter((n) -> n.getMensagem().getGrupo().equals(grupo)
-                && n.getInscrito().equals(usuario))
-                    .forEach((n) -> notifies.add(n));
+        for(Notificacao not : notificacoes) {
+            if (not.getInscrito().getEmail().equals(usuario.getEmail()) && 
+                    not.getMensagem().getGrupo().getNome().equals(grupo.getNome())) {
+                notifies.add(not);
+                System.out.println("Recuperou: " + not);
+            }
+        }
+//        notificacoes.stream().filter((n) -> n.getMensagem().getGrupo().getNome().equals(grupo.getNome())
+//                && n.getInscrito().equals(usuario))
+//                    .forEach((n) -> {
+//                        notifies.add(n);
+//                    });
         return notifies;
     }
     

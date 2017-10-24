@@ -20,6 +20,7 @@ public class ServerApp {
         GerenciadorChat chat = new GerenciadorChat();
         Registry registry = LocateRegistry.createRegistry(10999);
         registry.bind("Chat", chat);
+        System.out.println("Servidor ativo!");
         
     }
     

@@ -24,6 +24,7 @@ public class GerenciadorMensagem {
      */
     public void publicar(Mensagem mensagem) {
         mensagens.add(mensagem);
+        mensagens.forEach(System.out::println);
     }
     
     /**

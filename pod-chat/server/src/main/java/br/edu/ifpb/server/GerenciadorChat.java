@@ -3,21 +3,14 @@ package br.edu.ifpb.server;
 
 import br.edu.ifpb.shared.domain.Chat;
 import br.edu.ifpb.shared.domain.Grupo;
+import br.edu.ifpb.shared.domain.Mensagem;
 import br.edu.ifpb.shared.domain.Notificacao;
 import br.edu.ifpb.shared.domain.Subscriber;
 import br.edu.ifpb.shared.domain.Usuario;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-/**
- *
- * @author miolivc
- * @mail miolivc@outlook.com
- * @since 24/10/2017
- */
 
 public class GerenciadorChat extends UnicastRemoteObject implements Chat {
     
@@ -41,11 +34,13 @@ public class GerenciadorChat extends UnicastRemoteObject implements Chat {
     }
     
     @Override
-    public Chat login(Usuario usuario) {
-        if (gUsuario.login(usuario)) {
-            return this;
-        }
-        return null;
+    public boolean login(Usuario usuario) {
+        return gUsuario.login(usuario);
+    }
+    
+    @Override
+    public Grupo grupoByName(String name) {
+        return gGrupo.recuperar(name);
     }
     
     @Override
@@ -54,19 +49,26 @@ public class GerenciadorChat extends UnicastRemoteObject implements Chat {
     }
     
     @Override
-    public void onChat(Usuario usuario, Subscriber subscriber, Grupo grupo) {
-        new Thread(() -> {
-            gUsuario.logado(usuario);
-            List<Notificacao> notify = gNotificacao.recuperaNotificacao(usuario, grupo);
-            notify.forEach((n) -> {
-                try {
-                    subscriber.receber(n.getMensagem());
-                    gNotificacao.remove(n);
-                } catch (RemoteException ex) {
-                    ex.printStackTrace();
-                }
-            });
-        }).start();
+    public void onChat(Usuario usuario, Subscriber subscriber, Grupo grupo) throws RemoteException {
+        System.out.println("Entrou aqui.. A enviar notificaçao");
+        gUsuario.logado(usuario);
+        List<Notificacao> notify = gNotificacao.recuperaNotificacao(usuario, gGrupo.recuperar(grupo.getNome()));
+        System.out.println("------>" + notify.size());
+        notify.forEach((Notificacao n) -> {
+            try {
+                subscriber.receber(n.getMensagem());
+                gNotificacao.remove(n);
+            } catch (RemoteException ex) {
+                System.err.println(ex);
+            }
+        });
     }
+
+    @Override
+    public void publicar(Mensagem mensagem) throws RemoteException {
+        gMensagem.publicar(mensagem);
+        gNotificacao.criaNotificacao(mensagem, grupoByName(mensagem.getGrupo().getNome()));
+    }
+
     
 }

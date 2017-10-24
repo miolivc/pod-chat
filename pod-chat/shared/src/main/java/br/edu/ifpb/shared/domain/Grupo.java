@@ -4,6 +4,7 @@ package br.edu.ifpb.shared.domain;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Grupo implements Serializable {
     private String nome;
@@ -33,8 +34,32 @@ public class Grupo implements Serializable {
     }
 
     @Override
+    public int hashCode() {
+        int hash = 3;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Grupo other = (Grupo) obj;
+        if (!Objects.equals(this.nome, other.nome)) {
+            return false;
+        }
+        return true;
+    }
+    
+    @Override
     public String toString() {
-        return "Grupo{" + "nome=" + nome + ", inscritos=" + inscritos + '}';
+        return "Grupo{" + "nome=" + nome + "}";
     }
     
 }

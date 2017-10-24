@@ -32,7 +32,14 @@ public class GerenciadorUsuario {
      * @return 
      */
     public boolean login(Usuario usuario) {
-        return ativos.add(registrados.stream().filter((u) -> u.equals(usuario)).findFirst().get());
+        for(Usuario u: registrados) {
+            if (u.getNome().equals(usuario.getNome()) && u.getEmail().equals(usuario.getEmail())) {
+                ativos.add(u);
+                return true;
+            }
+        }
+//        return ativos.add(registrados.stream().filter((u) -> u.equals(usuario)).findFirst().get());
+        return false;
     }
 
     /**
