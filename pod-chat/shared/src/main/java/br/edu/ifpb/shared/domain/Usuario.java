@@ -25,5 +25,10 @@ public class Usuario implements Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    @Override
+    public String toString() {
+        return "Usuario{" + "nome=" + nome + ", email=" + email + '}';
+    }
     
 }

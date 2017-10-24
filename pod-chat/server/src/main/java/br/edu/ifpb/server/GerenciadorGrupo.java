@@ -10,36 +10,56 @@ import java.util.List;
  *
  * @author miolivc
  * @mail miolivc@outlook.com
- * @since 13/10/2017
+ * @since 24/10/2017
  */
 
 public class GerenciadorGrupo {
-
-    private final List<Grupo> grupos = new ArrayList<>();
     
-    public void addUser(Usuario usuario, String nomeGrupo) {
-        for (Grupo grupo: grupos) {
-            if (grupo.getNome().equalsIgnoreCase(nomeGrupo)) {
-                grupo.getInscritos().add(usuario);
-                break;
+    private List<Grupo> grupos = new ArrayList<>();
+    
+    /**
+     * Busca o grupo passado como parametro na lista dos existentes e
+     * adiciona um determinado usuario na lista de inscritos desse grupo
+     * 
+     * @param usuario
+     * @param grupo 
+     */
+    public void inscrever(Usuario usuario, Grupo grupo) {
+        grupos.forEach((Grupo g) -> {
+            if (g.equals(grupo)) {
+                g.getInscritos().add(usuario);
+                return;
             }
-        }
+        });
     }
     
-    public Grupo getGrupo(String nomeGrupo) {
-        Grupo grupo = null;
-        for (Grupo g: grupos) {
-            if (g.getNome().equalsIgnoreCase(nomeGrupo)) {
-                grupo = g;
+    /**
+     * Busca o grupo passado como parametro na lista dos existentes e
+     * remove o usuario passado por parametro na lista de inscritos desse grupo
+     * 
+     * @param usuario
+     * @param grupo 
+     */
+    public void remover(Usuario usuario, Grupo grupo) {
+        grupos.forEach((g) -> {
+            if (g.equals(grupo)) {
+                g.getInscritos().remove(usuario);
+                return;
             }
-        }
-        return grupo;
+        });
     }
     
-    public void removeUser(Usuario usuario, String nomeGrupo) {
-        grupos.stream()
-              .filter((g) -> (g.getNome().equalsIgnoreCase(nomeGrupo)))
-              .forEachOrdered((Grupo selected) -> selected.getInscritos().remove(usuario));
+    /**
+     * Adiciona a instancia de um novo grupo no chat
+     * 
+     * @param grupo 
+     */
+    public boolean criar(Grupo grupo) {
+        return grupos.add(grupo);
+    }
+    
+    public List<Grupo> existentes() {
+        return grupos;
     }
     
 }

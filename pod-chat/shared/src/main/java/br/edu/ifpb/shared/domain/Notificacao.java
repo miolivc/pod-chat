@@ -2,14 +2,16 @@
 package br.edu.ifpb.shared.domain;
 
 import java.io.Serializable;
-import java.util.List;
 
 public class Notificacao implements Serializable {
     private Mensagem mensagem;
-    private List<Usuario> inscritos;
+    private Usuario inscrito;
     private boolean entregue;
 
-    public Notificacao() {
+    public Notificacao(Mensagem mensagem, Usuario usuario) {
+        this.mensagem = mensagem;
+        this.inscrito = inscrito;
+        this.entregue = false;
     }
 
     public Mensagem getMensagem() {
@@ -20,12 +22,12 @@ public class Notificacao implements Serializable {
         this.mensagem = mensagem;
     }
 
-    public List<Usuario> getInscritos() {
-        return inscritos;
+    public Usuario getInscrito() {
+        return inscrito;
     }
 
-    public void setInscritos(List<Usuario> inscritos) {
-        this.inscritos = inscritos;
+    public void setInscrito(Usuario inscrito) {
+        this.inscrito = inscrito;
     }
 
     public boolean isEntregue() {
@@ -35,5 +37,11 @@ public class Notificacao implements Serializable {
     public void setEntregue(boolean entregue) {
         this.entregue = entregue;
     }
-    
+
+    @Override
+    public String toString() {
+        return "Notificacao{" + "mensagem=" + mensagem + ", inscrito="
+                + inscrito + ", entregue=" + entregue + '}';
+    }
+
 }

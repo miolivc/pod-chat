@@ -54,4 +54,10 @@ public class Mensagem implements Serializable {
         this.body = body;
     }
 
+    @Override
+    public String toString() {
+        return "Mensagem{" + "id=" + id + ", remetente=" + remetente + ", timestamp=" + 
+                timestamp + ", grupo=" + grupo + ", body=" + body + '}';
+    }
+    
 }

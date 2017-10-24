@@ -26,5 +26,10 @@ public class Grupo implements Serializable {
     public void setInscritos(List<Usuario> inscritos) {
         this.inscritos = inscritos;
     }
+
+    @Override
+    public String toString() {
+        return "Grupo{" + "nome=" + nome + ", inscritos=" + inscritos + '}';
+    }
     
 }
