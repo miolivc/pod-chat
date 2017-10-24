@@ -36,7 +36,6 @@ public class GerenciadorNotificacao {
                 notificacoes.add(notificacao);
                 System.out.println("Notificacao" + notificacao);
             }
-            
         }
     }
     
@@ -66,8 +65,8 @@ public class GerenciadorNotificacao {
     public List<Notificacao> recuperaNotificacao(Usuario usuario, Grupo grupo) {
         List<Notificacao> notifies = new ArrayList<>(); 
         for(Notificacao not : notificacoes) {
-                System.out.println("Foi recuperada uma notificacao para " + usuario);
-                notifies.add(not);
+            notifies.add(not);
+            System.out.println("Foi recuperada uma notificacao para " + usuario.getNome());
         }
         return Collections.unmodifiableList(notifies);
     }

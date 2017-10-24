@@ -44,22 +44,11 @@ public class ClientApp {
                         Grupo grupo = selecionaGrupo(chat);
                         chat.inscrever(grupo, usuario);
                         
-                        new Timer().schedule(new TimerTask() {
-                            @Override
-                            public void run() {
-                                try {
-                                    chat.onChat(usuario, subs, chat.grupoByName(grupo.getNome()));//
-                                } catch (RemoteException ex) {
-                                    System.err.print("Erro ao receber mensagem: " + ex);
-                                }
-                            }
-                        }, 1000, 10000);
-
                         while (true) {
-                            System.out.println("...");
+                            chat.onChat(usuario, subs, grupo);
                             Mensagem mensagem = new Mensagem();
                             mensagem.setBody(scanner.nextLine());//
-                            mensagem.setGrupo(chat.grupoByName(grupo.getNome()));
+                            mensagem.setGrupo(grupo);
                             mensagem.setRemetente(usuario);
                             mensagem.setTimestamp(LocalDateTime.now());
                             chat.publicar(mensagem);
